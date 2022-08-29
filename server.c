@@ -6,7 +6,7 @@
 /*   By: mealjnei <mealjnei@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:43:14 by mealjnei          #+#    #+#             */
-/*   Updated: 2022/08/24 15:56:44 by mealjnei         ###   ########.fr       */
+/*   Updated: 2022/08/29 14:41:49 by mealjnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void    ft_putstr_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_receive(int sig)
+void	_receiving(int sig)
 {
 	static char	c;
 	static int	bit;
@@ -39,16 +39,17 @@ void	ft_receive(int sig)
 	c = c << 1;
 }
 
-int	main(int ac)
+int	main(int ac,char **av)
 {
 	pid_t	pid;
 
+	(void)av;
 	if (ac != 1)
 		ft_putstr_error("Wrong number of arguments entered \n");
 	pid = getpid();
 	ft_printf("The Server PID is: %d\n", pid);
-	signal(SIGUSR1, &ft_receive);
-	signal(SIGUSR2, &ft_receive);
+	signal(SIGUSR1, &_receiving);
+	signal(SIGUSR2, &_receiving);
 	while (1)
 		pause();
 	return (0);

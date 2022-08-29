@@ -6,7 +6,7 @@
 #    By: mealjnei <mealjnei@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/04 13:37:19 by mealjnei          #+#    #+#              #
-#    Updated: 2022/08/23 16:51:00 by mealjnei         ###   ########.fr        #
+#    Updated: 2022/08/28 14:46:59 by mealjnei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,15 @@ SRCS		= server.c client.c
 
 OBJS		= $(SRCS:.c=.o)
 
-all:		$(NAME_SERVER) $(NAME_CLIENT)
+all:		$(OBJS) $(NAME_SERVER) $(NAME_CLIENT)
 
 $(LIBFT) :
 		@$(MAKE) -sC ./libft
 $(NAME_SERVER) : $(LIBFT)
-			$(CC) -o server server.c $(LIBFT)
+			$(CC) -o server server.o $(LIBFT)
 
 $(NAME_CLIENT) : $(LIBFT)
-			$(CC) -o client client.c $(LIBFT)
+			$(CC) -o client client.o $(LIBFT)
 
 clean:
 			rm -rf $(OBJS)

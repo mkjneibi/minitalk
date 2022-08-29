@@ -6,7 +6,7 @@
 /*   By: mealjnei <mealjnei@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 13:41:57 by mealjnei          #+#    #+#             */
-/*   Updated: 2022/08/24 16:06:13 by mealjnei         ###   ########.fr       */
+/*   Updated: 2022/08/28 14:50:52 by mealjnei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,26 @@ void    ft_putstr_error(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_signh(pid_t pid, char *s)
+void	ft_signal(pid_t pid, char *str)
 {
 	int	x;
 	int	er;
 
-	while (*s)
+	while (*str)
 	{
 		x = 7;
 		while (x >= 0)
 		{
-			if ((*s >> x & 1) == 1)
+			if (*str >> x & 1)
 				er = kill(pid, SIGUSR1);
-			else if ((*s >> x & 1) == 0)
+			else if (!(*str >> x & 1))
 				er = kill(pid, SIGUSR2);
 			if (er < 0)
 				ft_putstr_error("Wrong PID \n");
-			usleep(300);
+			usleep(150);
 			x--;
 		}
-		s++;
+		str++;
 	}
 }
 
@@ -50,9 +50,9 @@ int	main(int ac, char **av)
 	pid_t pid;
 
 	if (ac != 3 || !ft_strlen(av[1]) || !ft_strlen(av[2]))
-		ft_putstr_error("Wrong number of arguments entered \n");
+		ft_putstr_error("Wrong number of arguments entered\n");
 	pid = ft_atoi(av[1]);
 	if ((pid < 1000 || pid > 99999))
 		ft_putstr_error("Wrong arguments. \n");
-	ft_signh(pid, av[2]);
+	ft_signal(pid, av[2]);
 }
